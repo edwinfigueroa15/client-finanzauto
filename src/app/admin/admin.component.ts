@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import Modules from 'app/shared/modules';
 import { Menu } from 'app/core/interfaces/menu.interface';
 import { Router } from '@angular/router';
+import { AuthService } from 'app/core/services/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -17,6 +18,7 @@ export default class AdminComponent {
     { title: 'Vehículos', url: '/admin/vehicle', icon: 'assets/icons/car.png' },
   ]
 
+  private _authService = inject(AuthService);
   private _router = inject(Router);
 
   async ngOnInit() {
@@ -35,7 +37,7 @@ export default class AdminComponent {
   }
 
   logout() {
-    // this._authService.logout()
+    this._authService.logout()
   }
 
 }

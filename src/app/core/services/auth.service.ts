@@ -1,10 +1,17 @@
 import short from 'short-uuid';
-import { Injectable, inject } from '@angular/core';
-import { UtilsService } from '@/app/shared/utils/utils.service';
-import { IUser } from '../interfaces/tables.interfaces';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, inject, signal } from '@angular/core';
+import { UtilsService } from 'app/shared/utils/utils.service';
+import { jwtDecode } from "jwt-decode";
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 interface ILogin {
+  email: string;
+  password: string;
+}
+
+interface ISignUp {
+  name: string;
   email: string;
   password: string;
 }
@@ -13,62 +20,32 @@ interface ILogin {
   providedIn: 'root'
 })
 export class AuthService {
-  user$ = new BehaviorSubject<IUser | null>(null);
+  user = signal<any>(null);
+  client_token = signal<string | null>(null);
 
   private _utilsService = inject(UtilsService);
+  private _http = inject(HttpClient);
   constructor() {
-    const user_token = this._utilsService.getLocalStorage('user_token') || null;
-    this.user$.next(user_token);
+    const token = this._utilsService.getLocalStorage('client_token') || null;
+    if(token) this.decodeJwt(token);
   }
 
   login(data: ILogin) {
-    let users = this._utilsService.getLocalStorage('users') || [];
-    if (!users) {
-      this._utilsService.openSnackBar('No existen usuarios', { panelClass: "snackbar-danger" });
-      return;
-    }
-
-    const currentUser = users.find((user: IUser) => user.email === data.email);
-    if (!currentUser) {
-      this._utilsService.openSnackBar('Usuario no registrado', { panelClass: "snackbar-danger" });
-      return;
-    }
-
-    const passwordCorrect = this._utilsService.compareSync(data.password, currentUser.password!);
-    if(!passwordCorrect) {
-      this._utilsService.openSnackBar('No coinciden los datos', { panelClass: "snackbar-danger" });
-      return;
-    }
-
-    this.user$.next(currentUser);
-    this._utilsService.saveLocalStorage('user_token', currentUser);
-    this._utilsService.routerLink('/admin');
+    return this._http.post(`${environment.API_URL}/Client/login`, data);
   }
 
-  signUp(data: IUser) {
-    let users = this._utilsService.getLocalStorage('users') || [];
-    if (users) {
-      const userExist = users.find((user: IUser) => user.email === data.email);
-      if (userExist) {
-        this._utilsService.openSnackBar('El usuario ya existe', { panelClass: "snackbar-danger" });
-        return;
-      }
-    }
+  signUp(data: ISignUp) {
+    return this._http.post(`${environment.API_URL}/Client/sign-up`, data)
+  }
 
-    data.password = this._utilsService.hashSync(data.password!);
-    data.id = short.generate();
-    data.active = true;
-    data.hotels = [];
-    users.push(data);
-
-    this.user$.next(data);
-    this._utilsService.saveLocalStorage('user_token', data);
-    this._utilsService.saveLocalStorage('users', users);
-    this._utilsService.routerLink('/admin');
+  decodeJwt(token: string) {
+    const decode: any = jwtDecode(token);
+    this.client_token.update(() => token);
+    this.user.update(() => ({ id: decode.id, email: decode.email }));
   }
 
   logout() {
-    localStorage.removeItem('user_token');
+    localStorage.removeItem('client_token');
     this._utilsService.routerLink('/auth/login');
   }
 

@@ -26,18 +26,12 @@
                         <span class="self-center whitespace-nowrap">Admin</span>
                     </a>
                 </div>
-                <!-- <div class="cursor-pointer" [matMenuTriggerFor]="menuAdmin">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                <div class="cursor-pointer flex items-center" (click)="logout()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 inline">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
                     </svg>
-            
-                    <mat-menu #menuAdmin="matMenu">
-                    <button mat-menu-item (click)="logout()">
-                        <mat-icon>exit_to_app</mat-icon>
-                        <span>Cerrar sesión</span>
-                    </button>
-                    </mat-menu>               
-                </div> -->
+                    Cerrar sesión              
+                </div>
             </div>
         </div>
     </nav>
