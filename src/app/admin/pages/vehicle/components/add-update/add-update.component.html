@@ -1,0 +1,121 @@
+
+<div class="flex justify-center items-center w-full h-screen bg-slate-900 bg-opacity-40 fixed top-0 left-0 right-0 z-50">
+        <div class="relative w-full max-w-2xl h-full px-4 md:h-auto flex justify-center items-center">
+            <!-- Modal content -->
+            <div class="w-full bg-white rounded-lg shadow relative">
+
+                <!-- Modal header -->
+                <div class="flex items-start justify-between p-5 border-b rounded-t">
+                    <h3 class="text-xl font-semibold">{{ isEdit ? 'Actualizar' : 'Agregar' }} un vehiculo</h3>
+                    <button type="button" (click)="closeModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="add-user-modal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+                    </button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="p-6 space-y-6" style="max-height: calc(100vh - 300px); overflow-y: scroll;">
+                    <form [formGroup]="form">
+                        <div class="grid grid-cols-6 gap-1">
+                            <div class="col-span-6 sm:col-span-3">
+                                <app-input-text
+                                    type="text"
+                                    label="Nombre"
+                                    [control]="form.controls.name"
+                                    [errors]="errors.name">
+                                </app-input-text>
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                                <app-input-text
+                                    type="text"
+                                    label="Placa"
+                                    [control]="form.controls.plate"
+                                    [errors]="errors.plate">
+                                </app-input-text>
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                                <app-input-select
+                                    label="Color"
+                                    [list]="listColor"
+                                    [control]="form.controls.color"
+                                    [errors]="errors.color">
+                                </app-input-select>
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                                <app-input-text
+                                    type="text"
+                                    label="Marca"
+                                    [control]="form.controls.brand"
+                                    [errors]="errors.brand">
+                                </app-input-text>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <app-input-text
+                                    type="text"
+                                    label="Linea"
+                                    [control]="form.controls.line"
+                                    [errors]="errors.line">
+                                </app-input-text>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <app-input-select
+                                    label="Año"
+                                    [list]="listYear"
+                                    [control]="form.controls.year"
+                                    [errors]="errors.year">
+                                </app-input-select>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <app-input-text
+                                    type="text"
+                                    label="Kilometraje"
+                                    [control]="form.controls.kilimetres"
+                                    [errors]="errors.kilimetres">
+                                </app-input-text>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <app-input-text
+                                    type="number"
+                                    label="Costo"
+                                    [control]="form.controls.cost"
+                                    [errors]="errors.cost">
+                                </app-input-text>
+                            </div>
+
+                            <div class="col-span-6">
+                                <app-input-file
+                                    label="Imagenes"
+                                    [images]="images"
+                                    (filesSelectEvent)="filesSelect($event)">
+                                </app-input-file>
+                            </div>
+
+                            <div class="col-span-6">
+                                <app-input-checkbox
+                                    label="Estado activo?"
+                                    [control]="form.controls.status">
+                                </app-input-checkbox>
+                            </div>
+
+                            <div class="col-span-6">
+                                <app-textarea
+                                    label="Observaciones"
+                                    [control]="form.controls.observations">
+                                </app-textarea>
+                            </div>
+                        </div> 
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="items-center p-6 border-t border-gray-200 rounded-b">
+                    <button (click)="OnSubmit()" [disabled]="this.form.invalid || !filesAreLoaded()" [ngClass]="this.form.invalid || !filesAreLoaded() ? 'bg-slate-400' : 'cursor-pointer bg-cyan-600 hover:bg-cyan-700'" class="text-white focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
+                        {{ isEdit ? 'Actualizar' : 'Agregar' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import Modules from 'app/shared/modules';
-import { Menu } from 'app/core/interfaces/menu.interface';
+import { Menu } from 'app/core/interfaces/components.interface';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/core/services/auth.service';
 

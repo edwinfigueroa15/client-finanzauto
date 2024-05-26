@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, booleanAttribute } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, booleanAttribute, signal } from '@angular/core';
 import Modules from 'app/shared/modules';
 
 @Component({
@@ -21,7 +21,7 @@ export class TableComponent  implements OnInit {
   @Input({ required: true }) nameHeaderColumns: string[] = [];
   @Input({ required: true }) keyBodyData: string[] = [];
   @Input({ required: true }) dataBodyTable: any[] = [];
-  @Input({ transform: booleanAttribute }) showPaginator: boolean = false;
+  @Input() paginator = signal({ show: false, currentPage: 1, pageSize: 5, totalPage: 1 });
 
   @Output() detailEvent = new EventEmitter<any>();
   @Output() editEvent = new EventEmitter<any>();

@@ -1,4 +1,3 @@
-import short from 'short-uuid';
 import { Injectable, inject, signal } from '@angular/core';
 import { UtilsService } from 'app/shared/utils/utils.service';
 import { jwtDecode } from "jwt-decode";
@@ -26,7 +25,7 @@ export class AuthService {
   private _utilsService = inject(UtilsService);
   private _http = inject(HttpClient);
   constructor() {
-    const token = this._utilsService.getLocalStorage('client_token') || null;
+    const token = localStorage.getItem('client_token') || null;
     if(token) this.decodeJwt(token);
   }
 

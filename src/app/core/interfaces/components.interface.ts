@@ -3,3 +3,8 @@ export interface Menu {
     url: string;
     icon: string;
 }
+
+export interface ListSelect {
+    value: string | number,
+    label: string
+}

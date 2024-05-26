@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import Modules from 'app/shared/modules';
 import { UtilsService } from 'app/shared/utils/utils.service';
@@ -12,18 +12,28 @@ import { UtilsService } from 'app/shared/utils/utils.service';
 })
 export class InputFileComponent implements OnInit {
   nameError: string = '';
-  @Input({ required: true }) control!: FormControl;
-  @Input({ required: true }) label!: string;
-  @Input() value: any = null;
-  @Input() errors: any = {};
   
-  constructor() { }
+  @Input({ required: true }) label!: string;
+  @Input() images = signal<string[]>([]);
+  
+  @Output() filesSelectEvent = new EventEmitter<File[]>();
 
+  constructor() { }
   ngOnInit() { }
 
-  getKeyError(value: any) {
-    if(value != null) this.nameError = Object.keys(value)[0];
-    else this.nameError = "";
-    return this.nameError;
+  upload(event: any) {
+    this.images.update(value => []);
+    const files: File[] = event.target.files;
+    
+    if(files.length == 0) {
+      this.filesSelectEvent.emit(files);
+      return;
+    };
+
+    Array.from(files).forEach(file => {
+      this.images.update(value => [...value, URL.createObjectURL(file)]);
+    })
+
+    this.filesSelectEvent.emit(files);
   }
 }
