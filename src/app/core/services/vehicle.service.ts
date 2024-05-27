@@ -16,6 +16,10 @@ export class VehicleService {
   private _authService = inject(AuthService);
   constructor() { }
 
+  getAllForClients(queryParams?: any) {
+    return this._http.get(`${environment.API_URL}/Vehicle/all/clients?search=${queryParams?.search || ''}&pageIndex=${queryParams?.pageIndex || 0}&pageSize=${queryParams?.pageSize || 0}`);
+  }
+
   getAll(queryParams?: any) {
     return this._http.get(`${environment.API_URL}/Vehicle/${this._authService.user().id}/all?search=${queryParams?.search || ''}&pageIndex=${queryParams?.pageIndex || 0}&pageSize=${queryParams?.pageSize || 0}`);
   }

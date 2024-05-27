@@ -14,6 +14,10 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'client',
+        loadChildren: () => import('./client/client.routes').then(r => r.routes),
+    },
+    {
         path: '',
         redirectTo: 'admin',
         pathMatch: 'full'

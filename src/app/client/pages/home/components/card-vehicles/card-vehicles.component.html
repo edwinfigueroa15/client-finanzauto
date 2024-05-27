@@ -1,0 +1,31 @@
+<div class="w-96 h-80 relative rounded-md bg-gray-100 p-2 sm:p-4">
+    <div class="absolute right-5 top-5 z-10 rounded-full bg-gray-600 px-2 text-center text-sm text-white">
+        <span>{{ position + 1 }}</span>/<span>{{ paths.length }}</span>
+    </div>
+
+    @if(position != 0) {
+        <button (click)="previous()" class="absolute left-5 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-gray-100 shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>              
+        </button>
+    }
+
+    @if(position+1 < paths.length) {
+        <button (click)="forward()" class="absolute right-5 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-gray-100 shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+        </button>
+    }
+
+    <div class="relative top-0">
+        <div x-transition:enter="transition transform duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition transform duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="absolute top-0">
+            <img [src]="paths[position]" style="width: 350px; height: 230px;" alt="image" class="rounded-sm" />
+        </div>
+    </div>
+
+    <div class="relative" style="top: 245px;">
+        <button (click)="Ondetail()" class="p-2 w-full bg-emerald-800 text-white rounded">Ver detalle</button>
+    </div>
+</div>

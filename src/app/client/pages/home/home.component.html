@@ -1,0 +1,5 @@
+<main class="p-10 min-h-screen w-full bg-slate-200 flex flex-wrap justify-center items-start gap-8">
+    @for (vehicle of listVehicles; track $index) {
+        <app-card-vehicles [vehicle]="vehicle" (detailEvent)="detailEvent($event)"></app-card-vehicles>
+    }
+</main>
