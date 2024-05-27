@@ -17,8 +17,8 @@ export default class LoginComponent {
   allSubs: Subscription[] = [];
   
   form = new FormGroup({
-    email: new FormControl('test4@gmail.com', [Validators.required, Validators.email]),
-    password: new FormControl('123456', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   })
 
   errors = {

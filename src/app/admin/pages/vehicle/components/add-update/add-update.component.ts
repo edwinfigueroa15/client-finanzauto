@@ -29,19 +29,19 @@ export class AddUpdateComponent implements OnInit {
   
   form = new FormGroup({
     id: new FormControl(null),
-    name: new FormControl('Logan', [Validators.required]),
-    plate: new FormControl('XDR456', [Validators.required]),
-    color: new FormControl('blue', [Validators.required]),
-    brand: new FormControl('Renoult', [Validators.required]),
-    line: new FormControl('Sedan', [Validators.required]),
-    year: new FormControl('2019', [Validators.required]),
-    kilimetres: new FormControl('80000', [Validators.required]),
-    cost: new FormControl('40000000', [Validators.required]),
+    name: new FormControl('', [Validators.required]),
+    plate: new FormControl('', [Validators.required]),
+    color: new FormControl('', [Validators.required]),
+    brand: new FormControl('', [Validators.required]),
+    line: new FormControl('', [Validators.required]),
+    year: new FormControl('', [Validators.required]),
+    kilimetres: new FormControl('', [Validators.required]),
+    cost: new FormControl('', [Validators.required]),
     image: new FormControl(''),
     salesStatus: new FormControl('Disponible'),
     clientId: new FormControl(null),
     status: new FormControl(true),
-    observations: new FormControl('Observations del carro', [Validators.required]),
+    observations: new FormControl('', [Validators.required]),
   })
 
   filesAreLoaded = signal<boolean>(false);
