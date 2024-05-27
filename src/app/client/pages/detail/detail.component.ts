@@ -6,13 +6,15 @@ import { Subscription } from 'rxjs';
 import { SliderComponent } from 'app/shared/components';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UtilsService } from 'app/shared/utils/utils.service';
+import { SaleService } from 'app/core/services/sale.service';
+import { BuyVehicleComponent } from './components/buy-vehicle/buy-vehicle.component';
 
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss',
   standalone: true,
-  imports: [Modules, SliderComponent],
+  imports: [Modules, SliderComponent, BuyVehicleComponent],
 })
 export default class DetailComponent {
   isLoading = signal<boolean>(true)
@@ -22,6 +24,7 @@ export default class DetailComponent {
   
   private _vehicleService = inject(VehicleService);
   private _utilsService = inject(UtilsService);
+  protected _saleService = inject(SaleService);
   private _activatedRoute = inject(ActivatedRoute);
   constructor() {
     const id = this._activatedRoute.snapshot.paramMap.get('id');
@@ -52,6 +55,10 @@ export default class DetailComponent {
         this.isLoading.update(() => false);
       }
     })
+  }
+
+  buyVehicle() {
+    this._saleService.showModalBuy.update(() => true);
   }
 
 }

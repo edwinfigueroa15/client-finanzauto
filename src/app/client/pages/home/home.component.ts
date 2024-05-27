@@ -40,7 +40,7 @@ export default class HomeComponent {
     this.allSubs[this.allSubs.length] = this._vehicleService.getAllForClients(queryParams).subscribe({
       next: (response: any) => {
         this.paginator.totalPage = Math.ceil(response.length / this.paginator.pageSize);
-        this.listVehicles = [...response.data, ...response.data, ...response.data];
+        this.listVehicles = response.data;
       },
       error: (error: any) => {
         console.log(error.error);
