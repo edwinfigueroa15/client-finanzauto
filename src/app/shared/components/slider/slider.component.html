@@ -1,0 +1,25 @@
+<div class="w-full h-full relative rounded bg-gray-100">
+    <div class="absolute right-5 top-5 z-10 rounded-full bg-gray-600 px-2 text-center text-sm text-white">
+        <span>{{ position() + 1 }}</span>/<span>{{ paths().length }}</span>
+    </div>
+
+    @if(position() != 0) {
+        <button (click)="previous()" class="absolute left-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-gray-100 shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>              
+        </button>
+    }
+
+    @if(position()+1 < paths().length) {
+        <button (click)="forward()" class="absolute right-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-gray-100 shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+        </button>
+    }
+
+    <div class="w-full bg-slate-800 contents rounded">
+        <img [src]="paths()[position()]" alt="image" class="w-full h-full rounded" />
+    </div>
+</div>

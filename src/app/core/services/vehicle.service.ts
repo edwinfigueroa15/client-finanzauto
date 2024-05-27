@@ -24,6 +24,10 @@ export class VehicleService {
     return this._http.get(`${environment.API_URL}/Vehicle/${this._authService.user().id}/all?search=${queryParams?.search || ''}&pageIndex=${queryParams?.pageIndex || 0}&pageSize=${queryParams?.pageSize || 0}`);
   }
 
+  getByIdForClient(id: number) {
+    return this._http.get(`${environment.API_URL}/Vehicle/by_id/${id}`);
+  }
+
   create(body: IVehicle) {
     return this._http.post(`${environment.API_URL}/Vehicle`, body);
   }

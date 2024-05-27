@@ -3,6 +3,7 @@ import { InputCheckboxComponent } from 'app/shared/components/input-checkbox/inp
 import { InputFileComponent } from 'app/shared/components/input-file/input-file.component';
 import { InputSelectComponent } from 'app/shared/components/input-select/input-select.component';
 import { InputTextComponent } from 'app/shared/components/input-text/input-text.component';
+import { SliderComponent } from 'app/shared/components/slider/slider.component';
 import { TableComponent } from 'app/shared/components/table/table.component';
 import { TextareaComponent } from 'app/shared/components/textarea/textarea.component';
 
@@ -12,6 +13,7 @@ const SharedComponents = [
     InputFileComponent,
     InputSelectComponent,
     InputTextComponent,
+    SliderComponent,
     TableComponent,
     TextareaComponent,
 ]
@@ -21,6 +23,7 @@ export { InputCheckboxComponent }
 export { InputFileComponent }
 export { InputSelectComponent }
 export { InputTextComponent }
+export { SliderComponent }
 export { TableComponent }
 export { TextareaComponent }
 

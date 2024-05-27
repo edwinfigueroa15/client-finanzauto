@@ -19,12 +19,12 @@ export const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'admin',
+        redirectTo: 'client',
         pathMatch: 'full'
     },
     {
         path: '**',
-        redirectTo: 'admin',
+        redirectTo: 'client',
         pathMatch: 'full'
     },
 ];
