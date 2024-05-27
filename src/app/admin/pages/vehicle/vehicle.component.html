@@ -34,6 +34,7 @@
         (editEvent)="editEvent($event)"
         (detailEvent)="detailEvent($event)"
         (deleteEvent)="deleteEvent($event)"
+        (changeStatusEvent)="changeStatusEvent($event)"
         (pageBackEvent)="pageBack($event)"
         (pageNextEvent)="pageNext($event)">
     </app-table>
@@ -47,4 +48,8 @@
 
 @if(_vehicleService.showModalDetailVeihcles()) {
     <app-detail [infoModal]="infoModal()"></app-detail>
+}
+
+@if(_vehicleService.showModalChangeStatus()) {
+    <app-change-status [infoModal]="infoModal()" (responseEvent)="responseChangeStatus($event)"></app-change-status>
 }

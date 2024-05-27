@@ -10,6 +10,7 @@ import { IVehicle } from 'app/core/interfaces/vehicle.interface';
 export class VehicleService {
   showModalAddUpdateVeihcles = signal(false);
   showModalDetailVeihcles = signal(false);
+  showModalChangeStatus = signal(false);
 
   private _http = inject(HttpClient);
   private _authService = inject(AuthService);

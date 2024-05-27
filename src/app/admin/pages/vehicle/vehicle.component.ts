@@ -8,13 +8,14 @@ import { IVehicle } from 'app/core/interfaces/vehicle.interface';
 import Swal from 'sweetalert2'
 import { UploadService } from 'app/core/services/upload.service';
 import { DetailComponent } from './components/detail/detail.component';
+import { ChangeStatusComponent } from './components/change-status/change-status.component';
 
 @Component({
   selector: 'app-vehicle',
   templateUrl: './vehicle.component.html',
   styleUrl: './vehicle.component.scss',
   standalone: true,
-  imports: [Modules, BreadCrumbsComponent, TableComponent, AddUpdateComponent, DetailComponent],
+  imports: [Modules, BreadCrumbsComponent, TableComponent, AddUpdateComponent, DetailComponent, ChangeStatusComponent],
 })
 export default class HotelComponent implements OnInit {
   isEditVehicle = signal(false);
@@ -23,9 +24,9 @@ export default class HotelComponent implements OnInit {
 
   allSubs: Subscription[] = [];
   
-  showActionsTable = { edit: true, delete: true, detail: true };
-  nameHeaderColumns: string[] = ['Nombre', 'Placa', 'Año', 'Color', 'Costo', 'Estado'];
-  keyBodyData: string[] = ['name', 'plate', 'year', 'color', 'cost', 'status'];
+  showActionsTable = { edit: true, delete: true, detail: true, status: true };
+  nameHeaderColumns: string[] = ['Nombre', 'Placa', 'Año', 'Color', 'Costo', 'Estado de venta', 'Estado'];
+  keyBodyData: string[] = ['name', 'plate', 'year', 'color', 'cost', 'salesStatus', 'status'];
   dataBodyTable: any[] = [];
   paginator = { show: true, currentPage: 1, pageSize: 10, totalPage: 1 }
 
@@ -127,6 +128,15 @@ export default class HotelComponent implements OnInit {
   detailEvent(event: any) {
     this.infoModal.update(() => event);
     this._vehicleService.showModalDetailVeihcles.update(() => true);
+  }
+
+  responseChangeStatus(event: any) {
+    if(event.status == "success") this.getAll();
+  }
+
+  changeStatusEvent(event: any) {
+    this.infoModal.update(() => event);
+    this._vehicleService.showModalChangeStatus.update(() => true);
   }
 
   pageBack(event: boolean) {

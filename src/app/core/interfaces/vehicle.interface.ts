@@ -7,6 +7,7 @@ export interface IVehicle {
     line: string;
     year: string;
     kilimetres: string;
+    salesStatus: string;
     cost: string;
     image: string;
     clientId: number;

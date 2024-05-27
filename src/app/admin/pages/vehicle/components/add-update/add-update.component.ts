@@ -38,6 +38,7 @@ export class AddUpdateComponent implements OnInit {
     kilimetres: new FormControl('80000', [Validators.required]),
     cost: new FormControl('40000000', [Validators.required]),
     image: new FormControl(''),
+    salesStatus: new FormControl('Disponible'),
     clientId: new FormControl(null),
     status: new FormControl(true),
     observations: new FormControl('Observations del carro', [Validators.required]),
