@@ -32,12 +32,19 @@
         [showActionsTable]="showActionsTable"
         [paginator]="paginator"
         (editEvent)="editEvent($event)"
-        (deleteEvent)="deleteEvent($event)">
+        (detailEvent)="detailEvent($event)"
+        (deleteEvent)="deleteEvent($event)"
+        (pageBackEvent)="pageBack($event)"
+        (pageNextEvent)="pageNext($event)">
     </app-table>
 } @else {
     <div class="text-center mt-3">No existen registros</div>
 }
 
 @if(_vehicleService.showModalAddUpdateVeihcles()) {
-    <app-add-update [isEdit]="isEditVehicle()" [infoModalEdit]="infoModalEdit()" (responseEvent)="responseAddUpdate($event)"></app-add-update>
+    <app-add-update [isEdit]="isEditVehicle()" [infoModalEdit]="infoModal()" (responseEvent)="responseAddUpdate($event)"></app-add-update>
+}
+
+@if(_vehicleService.showModalDetailVeihcles()) {
+    <app-detail [infoModal]="infoModal()"></app-detail>
 }

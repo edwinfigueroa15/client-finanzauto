@@ -1,11 +1,11 @@
 import { ListSelect } from "app/core/interfaces/components.interface";
 
 export const ListColor: ListSelect[] = [
-    { value: "blue", label: "Azul" },
-    { value: "red", label: "Rojo" },
-    { value: "yellow", label: "Amarrillo" },
-    { value: "white", label: "Blanco" },
-    { value: "black", label: "Negro" },
+    { value: "Azul", label: "Azul" },
+    { value: "Rojo", label: "Rojo" },
+    { value: "Amarrillo", label: "Amarrillo" },
+    { value: "Blanco", label: "Blanco" },
+    { value: "Negro", label: "Negro" },
   ];
 
 export const ListYear: ListSelect[] = [

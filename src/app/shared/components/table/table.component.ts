@@ -21,12 +21,15 @@ export class TableComponent  implements OnInit {
   @Input({ required: true }) nameHeaderColumns: string[] = [];
   @Input({ required: true }) keyBodyData: string[] = [];
   @Input({ required: true }) dataBodyTable: any[] = [];
-  @Input() paginator = signal({ show: false, currentPage: 1, pageSize: 5, totalPage: 1 });
+  @Input() paginator = { show: false, currentPage: 1, pageSize: 10, totalPage: 1 }
 
   @Output() detailEvent = new EventEmitter<any>();
   @Output() editEvent = new EventEmitter<any>();
   @Output() changeStatusEvent = new EventEmitter<any>();
   @Output() deleteEvent = new EventEmitter<any>();
+
+  @Output() pageBackEvent = new EventEmitter<any>();
+  @Output() pageNextEvent = new EventEmitter<any>();
   
   constructor() { }
 
@@ -46,6 +49,14 @@ export class TableComponent  implements OnInit {
 
   OnDelete(currenItem: any) {
     this.deleteEvent.emit(currenItem);
+  }
+
+  OnPageBack() {
+    this.pageBackEvent.emit(true);
+  }
+
+  OnPageNext() {
+    this.pageNextEvent.emit(true);
   }
 
 }

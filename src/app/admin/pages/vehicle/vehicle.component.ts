@@ -7,26 +7,27 @@ import { AddUpdateComponent } from './components/add-update/add-update.component
 import { IVehicle } from 'app/core/interfaces/vehicle.interface';
 import Swal from 'sweetalert2'
 import { UploadService } from 'app/core/services/upload.service';
+import { DetailComponent } from './components/detail/detail.component';
 
 @Component({
   selector: 'app-vehicle',
   templateUrl: './vehicle.component.html',
   styleUrl: './vehicle.component.scss',
   standalone: true,
-  imports: [Modules, BreadCrumbsComponent, TableComponent, AddUpdateComponent],
+  imports: [Modules, BreadCrumbsComponent, TableComponent, AddUpdateComponent, DetailComponent],
 })
 export default class HotelComponent implements OnInit {
   isEditVehicle = signal(false);
-  infoModalEdit = signal<IVehicle | null>(null);
+  infoModal = signal<IVehicle | null>(null);
   search: string = "";
 
   allSubs: Subscription[] = [];
   
-  showActionsTable = { edit: true, delete: true };
+  showActionsTable = { edit: true, delete: true, detail: true };
   nameHeaderColumns: string[] = ['Nombre', 'Placa', 'Año', 'Color', 'Costo', 'Estado'];
   keyBodyData: string[] = ['name', 'plate', 'year', 'color', 'cost', 'status'];
   dataBodyTable: any[] = [];
-  paginator = signal({ show: true, currentPage: 1, pageSize: 5, totalPage: 1 })
+  paginator = { show: true, currentPage: 1, pageSize: 10, totalPage: 1 }
 
   protected _vehicleService = inject(VehicleService);
   protected _uploadService = inject(UploadService);
@@ -40,28 +41,19 @@ export default class HotelComponent implements OnInit {
 	}
 
   searchChange() {
-    this.paginator.update(currentValue => {
-      currentValue.show = false;
-      return currentValue;
-    });
-
     if(this.search == '') {
       this.getAll();
 
     } else {
       const queryParams = {
         search: this.search,
-        pageIndex: this.paginator().currentPage,
-        pageSize: this.paginator().pageSize,
+        pageIndex: this.paginator.currentPage,
+        pageSize: this.paginator.pageSize,
       }
   
       this.allSubs[this.allSubs.length] = this._vehicleService.getAll(queryParams).subscribe({
         next: (response: any) => {
-          this.paginator.update((currentValue) => {
-            currentValue.show = true;
-            currentValue.totalPage = Math.ceil(response.length / this.paginator().pageSize)
-            return currentValue;
-          })
+          this.paginator.totalPage = Math.ceil(response.length / this.paginator.pageSize)
           this.dataBodyTable = response.data;
         },
         error: (error: any) => {
@@ -72,24 +64,15 @@ export default class HotelComponent implements OnInit {
   }
 
   getAll() {
-    this.paginator.update(currentValue => {
-      currentValue.show = false;
-      return currentValue;
-    });
-    
     const queryParams = {
       search: '',
-      pageIndex: this.paginator().currentPage,
-      pageSize: this.paginator().pageSize,
+      pageIndex: this.paginator.currentPage,
+      pageSize: this.paginator.pageSize,
     }
 
     this.allSubs[this.allSubs.length] = this._vehicleService.getAll(queryParams).subscribe({
       next: (response: any) => {
-        this.paginator.update((currentValue) => {
-          currentValue.show = true;
-          currentValue.totalPage = Math.ceil(response.length / this.paginator().pageSize)
-          return currentValue;
-        })
+        this.paginator.totalPage = Math.ceil(response.length / this.paginator.pageSize)
         this.dataBodyTable = response.data;
       },
       error: (error: any) => {
@@ -100,7 +83,7 @@ export default class HotelComponent implements OnInit {
 
   openModal() {
     this.isEditVehicle.update(() => false);
-    this.infoModalEdit.update(() => null);
+    this.infoModal.update(() => null);
     this._vehicleService.showModalAddUpdateVeihcles.update(() => true);
   }
 
@@ -110,7 +93,7 @@ export default class HotelComponent implements OnInit {
 
   editEvent(event: IVehicle) {
     this.isEditVehicle.update(() => true);
-    this.infoModalEdit.update(() => event);
+    this.infoModal.update(() => event);
     this._vehicleService.showModalAddUpdateVeihcles.update(() => true);
   }
 
@@ -139,6 +122,25 @@ export default class HotelComponent implements OnInit {
         })
       }
     });
+  }
+
+  detailEvent(event: any) {
+    this.infoModal.update(() => event);
+    this._vehicleService.showModalDetailVeihcles.update(() => true);
+  }
+
+  pageBack(event: boolean) {
+    if(event) {
+      this.paginator.currentPage -= 1;
+      this.getAll();
+    }
+  }
+
+  pageNext(event: boolean) {
+    if(event) {
+      this.paginator.currentPage += 1;
+      this.getAll();
+    }
   }
   
 }
